@@ -85,7 +85,7 @@ def remove_duplicates(video):
     return new
 
 # Main logic
-api_key = 'AIzaSyBqUI9I6z5br6_v_dC5lxoNsn72BjapSXg'  # Replace with your actual YouTube API key
+api_key = ''  # Replace with your actual YouTube API key
 keyword = input("Enter Search Keyword: ")
 num_Videos = input("Enter Number of Videos: ")
 duplicates = input("Do You Want to Remove Duplicate Videos? (Y/N) ")
