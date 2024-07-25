@@ -87,7 +87,7 @@ def remove_duplicates(video):
     return new
 
 # Example usage
-api_key = 'AIzaSyBqUI9I6z5br6_v_dC5lxoNsn72BjapSXg'
+api_key = ''
 keyword = input("Enter Search Keyword: ")
 num_Videos = input("Enter Number of Videos: ")
 duplicates = input("Do You Want to Remove Duplicate Videos? (Y/N) ")
