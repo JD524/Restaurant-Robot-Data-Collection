@@ -83,3 +83,99 @@ The script outputs the following:
 - Adjust the LLM base URL and model as needed.
 
 ---
+# Reddit Data Collector
+
+This script collects submissions and comments from Reddit using the Pushshift API and PRAW (Python Reddit API Wrapper). The collected data is exported to an Excel file for further analysis.
+
+## Prerequisites
+
+- Python 3.8 or higher
+- `praw` library
+- `pushshift_py` library
+- `typer` library
+- `loguru` library
+- `codetiming` library
+- `pandas` library
+- `pyyaml` library
+- `pretty_errors` library
+- `langchain_community` library
+
+You can install the required libraries using pip:
+
+```bash
+pip install praw pushshift_py typer loguru codetiming pandas pyyaml pretty_errors langchain_community
+```
+
+## Configuration
+
+1. **Reddit API Credentials**: You need a Reddit client ID, client secret, and username. Obtain these by creating a Reddit app [here](https://www.reddit.com/prefs/apps).
+
+2. **Pushshift API**: No additional configuration is needed for Pushshift API.
+
+## Usage
+
+### Command Line
+
+You can run the script from the command line using `typer`. Below is the syntax to run the script:
+
+```bash
+python subreddit_downloader.py [OPTIONS]
+```
+
+### Options
+
+- `subreddit`: The name of the subreddit you want to fetch data from.
+- `output_dir`: The directory where the data will be saved. Default is `./data`.
+- `batch_size`: The number of submissions to fetch per request. Default is `1000`.
+- `laps`: The number of times to fetch data. Default is `3`.
+- `reddit_id`: Your Reddit client ID.
+- `reddit_secret`: Your Reddit client secret.
+- `reddit_username`: Your Reddit username.
+- `utc_after`: Fetch submissions after this UTC date.
+- `utc_before`: Fetch submissions before this UTC date.
+- `debug`: Enable debug logging. Default is `False`.
+- `comments_cap`: Maximum number of comments to fetch per submission. Default is `100`.
+
+### Example
+
+```bash
+python subreddit_downloader.py subreddit_name --output_dir "./reddit_data" --batch_size 500 --laps 2 --reddit_id "your_client_id" --reddit_secret "your_client_secret" --reddit_username "your_username" --utc_after 1609459200 --utc_before 1672531199 --debug True --comments_cap 50
+```
+
+## How It Works
+
+1. **Initialization**: The script initializes the Reddit and Pushshift API clients and prepares the directories for storing data.
+
+2. **Data Collection**: For each lap, the script fetches submissions from the specified subreddit within the given UTC range. For each submission, it collects comments up to the specified limit.
+
+3. **Data Storage**: The fetched submissions and comments are stored in JSON files and also aggregated into pandas DataFrames.
+
+4. **Export**: The DataFrames are exported to an Excel file named `RedditArchive.xlsx`, with separate sheets for submissions and comments.
+
+## Directory Structure
+
+After running the script, the directory structure will look like this:
+
+```
+output_dir/
+└── subreddit_name/
+    └── run_id/
+        ├── submissions/
+        ├── submissions/raw/
+        ├── comments/
+        ├── comments/raw/
+        └── RedditArchive.xlsx
+```
+
+## Error Handling
+
+- **NotFound**: If a submission is not found, a warning is logged.
+- **General Errors**: Any other errors during the execution will be logged with details.
+
+## License
+
+This script is provided under the MIT License. See the LICENSE file for more details.
+
+## Contributing
+
+Feel free to open issues or pull requests if you have improvements or bug fixes.
